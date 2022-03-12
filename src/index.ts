@@ -1,56 +1,42 @@
-import TelegramApi, { Message, SendMessageOptions, CallbackQuery } from 'node-telegram-bot-api';
+import TelegramApi, { Message } from 'node-telegram-bot-api';
 import dotenv from 'dotenv';
+import { onStart } from './controllers/start';
+import { COMMANDS, KEYBOARD } from './helpers/constants';
+import { onLearn } from './controllers/learn';
+import { onTraining } from './controllers/training';
+import { firebaseConfig } from './firebase/config';
+import { initializeApp } from 'firebase/app';
 
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
+// Initialize Bot
 dotenv.config();
 const token = process.env.TOKEN || '';
+export const bot = new TelegramApi(token, { polling: true });
 
-const bot = new TelegramApi(token, { polling: true });
-
+// Bot commands
 bot.setMyCommands([
-  { command: '/start', description: 'Start' },
+  { command: COMMANDS.START.PATH, description: COMMANDS.START.DESCRIPTION },
 ]);
 
-const keyboard_options: SendMessageOptions = {
-  reply_markup: {
-    keyboard: [
-      [{ text: 'Keyboard button' }],
-    ],
-  },
-};
-
-const inline_keyboard_options: SendMessageOptions = {
-  reply_markup: {
-    inline_keyboard: [
-      [{ text: 'Inline button', callback_data: 'inline_button' }],
-    ],
-  },
-};
-
+// Bot on messages handlers
 bot.on('message', async (msg: Message) => {
   const chatId = msg.chat.id;
 
   try {
-    if (msg.text === '/start') {
-      return bot.sendMessage(chatId, 'Hello', keyboard_options);
+    if (msg.text === COMMANDS.START.PATH) {
+      return onStart(msg);
     }
-    if (msg.text === 'Keyboard button') {
-      return bot.sendMessage(chatId, 'Keyboard button clicked', inline_keyboard_options);
+    if (msg.text === KEYBOARD.LEARNING) {
+      return onLearn(msg);
+    }
+    if (msg.text === KEYBOARD.TRAINING) {
+      return onTraining(msg);
     }
   } catch (e) {
     return bot.sendMessage(chatId, 'Error :(');
   }
 
   return bot.sendMessage(chatId, 'Invalid value');
-
-});
-
-bot.on('callback_query', async (msg: CallbackQuery) => {
-  const chatId = msg.message?.chat.id;
-  const data = msg.data;
-
-  if (chatId) {
-    if (data === 'inline_button') {
-      return bot.sendMessage(chatId, 'Inline button clicked');
-    }
-  }
 });
