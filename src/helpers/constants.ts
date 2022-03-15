@@ -1,6 +1,7 @@
 export const KEYBOARD = {
   LEARNING: 'Учить новые слова',
-  TRAINING: 'Тренировать слова'
+  TRAINING: 'Угадать слово',
+  STATISTIC: 'Моя статистика'
 }
 
 export const COMMANDS = {
@@ -12,7 +13,13 @@ export const COMMANDS = {
 
 export const INLINE_KEYBOARD = {
   LEARNED: {
-    TEXT: "Finish!",
+    TEXT: "Выучил!",
     CALLBACK_DATA: 'learned'
   }
+}
+
+export const MESSAGE = {
+  ERROR: 'Упс... ошибка. Попробуй позже :(',
+  INVALID_VALUE: 'Неверное значение',
+  HELLO: 'Бот на связи! :)',
 }

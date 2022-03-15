@@ -1,11 +1,12 @@
 import TelegramApi, { Message } from 'node-telegram-bot-api';
 import dotenv from 'dotenv';
 import { onStart } from './controllers/start';
-import { COMMANDS, KEYBOARD } from './helpers/constants';
+import { COMMANDS, KEYBOARD, MESSAGE } from './helpers/constants';
 import { onLearn } from './controllers/learn';
 import { onTraining } from './controllers/training';
 import { firebaseConfig } from './firebase/config';
 import { initializeApp } from 'firebase/app';
+import { onStatistic } from './controllers/statistic';
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
@@ -34,9 +35,12 @@ bot.on('message', async (msg: Message) => {
     if (msg.text === KEYBOARD.TRAINING) {
       return onTraining(msg);
     }
+    if (msg.text === KEYBOARD.STATISTIC) {
+      return onStatistic(msg);
+    }
   } catch (e) {
-    return bot.sendMessage(chatId, 'Error :(');
+    return bot.sendMessage(chatId, MESSAGE.ERROR);
   }
 
-  return bot.sendMessage(chatId, 'Invalid value');
+  return bot.sendMessage(chatId, MESSAGE.HELLO);
 });

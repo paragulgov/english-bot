@@ -6,6 +6,7 @@ export const keyboard_options: SendMessageOptions = {
     keyboard: [
       [{ text: KEYBOARD.LEARNING }],
       [{ text: KEYBOARD.TRAINING }],
+      [{ text: KEYBOARD.STATISTIC }],
     ],
   },
 };

@@ -3,7 +3,7 @@ import { CallbackQuery, Message } from 'node-telegram-bot-api';
 import { learn_inline_keyboard_options } from '../helpers/keyboards';
 import { equalTo, get, getDatabase, limitToFirst, orderByChild, query, ref, update } from 'firebase/database';
 import { WordType } from '../types/types';
-import { INLINE_KEYBOARD } from '../helpers/constants';
+import { INLINE_KEYBOARD, MESSAGE } from '../helpers/constants';
 
 export const onLearn = async (msg: Message) => {
   const db = getDatabase();
@@ -51,18 +51,17 @@ export const onLearn = async (msg: Message) => {
                     });
                 });
 
-                return bot.sendMessage(chatId, 'Now you can practice these words');
+                return bot.sendMessage(chatId, 'Теперь ты можешь практиковать эти слова');
               }
             }
           });
         } else {
-          return bot.sendMessage(chatId, 'You have no new words');
+          return bot.sendMessage(chatId, 'У тебя нет новых слов');
         }
       })
       .catch((error) => {
-        // TODO
         console.log(error);
-        return bot.sendMessage(chatId, 'Error. Try later :(');
+        return bot.sendMessage(chatId, MESSAGE.ERROR);
       });
   }
 };
