@@ -59,8 +59,6 @@ export const onTraining = (msg: Message) => {
                         });
 
                       return bot.sendMessage(chatId, 'Правильно!');
-                    } else {
-                      return bot.sendMessage(chatId, 'Ты уже попробовал один раз, не пытайся меня обмануть, проказник))0');
                     }
                   } else {
                     if (randomWordId) {
