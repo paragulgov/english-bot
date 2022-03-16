@@ -6,13 +6,10 @@ import { onLearn } from './controllers/learn';
 import { onTraining } from './controllers/training';
 import { firebaseConfig } from './firebase/config';
 import { initializeApp } from 'firebase/app';
-import { getAnalytics, logEvent } from "firebase/analytics";
 import { onStatistic } from './controllers/statistic';
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-logEvent(analytics, 'notification_received');
+initializeApp(firebaseConfig);
 
 // Initialize Bot
 dotenv.config();
