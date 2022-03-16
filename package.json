@@ -1,7 +1,7 @@
 {
   "name": "english-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Telegram bot for learning English words",
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
