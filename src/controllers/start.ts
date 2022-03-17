@@ -19,7 +19,7 @@ export const onStart = async (msg: Message) => {
       } else {
         let array = initialWords;
 
-        for (let i = 0; i < 1000000; i++) {
+        for (let i = 0; i < 10; i++) {
           array = array.sort(() => Math.random() - 0.5)
         }
 
