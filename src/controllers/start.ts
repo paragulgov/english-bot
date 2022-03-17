@@ -19,7 +19,7 @@ export const onStart = async (msg: Message) => {
       } else {
         update(dbRef, {
           [userId]: {
-            words: initialWords,
+            words: initialWords.sort(() => Math.random() - 0.5)
           },
         }).then(() => {
           return bot.sendMessage(chatId, MESSAGE.HELLO, keyboard_options);
