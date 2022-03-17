@@ -17,9 +17,15 @@ export const onStart = async (msg: Message) => {
       if (snapshot.exists()) {
         return bot.sendMessage(chatId, MESSAGE.HELLO, keyboard_options);
       } else {
+        let array = initialWords;
+
+        for (let i = 0; i < 1000000; i++) {
+          array = array.sort(() => Math.random() - 0.5)
+        }
+
         update(dbRef, {
           [userId]: {
-            words: initialWords,
+            words: array
           },
         }).then(() => {
           return bot.sendMessage(chatId, MESSAGE.HELLO, keyboard_options);
